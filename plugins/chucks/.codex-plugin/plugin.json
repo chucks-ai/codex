@@ -1,0 +1,42 @@
+{
+  "name": "chucks",
+  "version": "1.0.0",
+  "description": "Generate 5E-compatible balanced, themed combat encounters for your party in seconds.",
+  "author": {
+    "name": "Chucks",
+    "url": "https://chucks.ai"
+  },
+  "homepage": "https://chucks.ai",
+  "repository": "https://github.com/chucks-ai/codex",
+  "license": "MIT",
+  "keywords": [
+    "ttrpg",
+    "tabletop-rpg",
+    "5e",
+    "fifth-edition",
+    "srd",
+    "encounter-builder",
+    "game-master"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Chucks",
+    "shortDescription": "Build balanced fifth-edition encounters",
+    "longDescription": "Generate 5E-compatible balanced, themed combat encounters for tabletop RPG parties. Chucks connects Codex to the hosted monster database and guides encounter planning, search, validation, and roster output.",
+    "developerName": "Chucks",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://chucks.ai",
+    "defaultPrompt": [
+      "Build a moderate encounter for four level 5 characters",
+      "Create a river ambush for my party",
+      "Make this encounter harder"
+    ],
+    "brandColor": "#7C3AED",
+    "screenshots": []
+  }
+}

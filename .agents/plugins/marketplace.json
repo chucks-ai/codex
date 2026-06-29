@@ -1,0 +1,20 @@
+{
+  "name": "chucks",
+  "interface": {
+    "displayName": "Chucks"
+  },
+  "plugins": [
+    {
+      "name": "chucks",
+      "source": {
+        "source": "local",
+        "path": "./plugins/chucks"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
