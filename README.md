@@ -8,10 +8,10 @@ Chucks is a plugin for Codex that helps Game Masters build combat encounters on 
 
 The plugin connects to the Chucks monster database automatically. No API keys, no configuration.
 
-From this repository root:
+Install directly from GitHub:
 
 ```bash
-codex plugin marketplace add .
+codex plugin marketplace add https://github.com/chucks-ai/codex
 codex plugin add chucks@chucks
 ```
 
@@ -36,6 +36,7 @@ The **Encounter Builder** skill. It knows how to:
 
 - Match monsters to your party's level and chosen difficulty
 - Respect the setting
+- Generate random wilderness, travel, and dungeon encounters at the roll of a die
 - Pick thematically coherent groups of enemies
 - Keep encounters playable
 
@@ -45,7 +46,6 @@ It **won't** give you stat blocks, read-aloud text, or tactical advice. Those be
 
 More skills are in the works:
 
-- **Random encounter generator** - wilderness, travel, and dungeon encounters at the roll of a die
 - **Monster builder** - design and balance your own stat blocks
 - **NPC generator** - flesh out NPCs with personality, motivation, and mechanics
 - **Rules lookup** - search SRD 5.2.1 for specific rules and spells
