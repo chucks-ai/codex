@@ -100,7 +100,7 @@ The Hook may add factions, motives, settings, and props, but do not invent gear,
 
 ### 4. Lookup when needed
 
-Call **monster_lookup** only when you need verified gear, movement, defenses, senses, or template-variant species to narrow the roster. For a basic Hook + Roster, search results are enough.
+Call **monster_lookup** only when you need the verified stat block (gear, defenses, senses, abilities) or template-variant species to narrow the roster. For a basic Hook + Roster, search results are enough.
 
 If lookup data does not contain a detail, do not guess.
 
