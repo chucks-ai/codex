@@ -1,8 +1,8 @@
 # Chucks
 
-**Generate 5E-compatible balanced, themed combat encounters for your party in seconds.**
+**Teach your AI how to play 5e. Right rules, sound mechanics, and ideas that surprise you.**
 
-Chucks is a plugin for Codex that helps Game Masters build combat encounters on the fly. Tell Codex your party's level, the setting, and the kind of fight you want. It picks monsters that fit, balances the XP, and hands you a short hook you can read straight to the table.
+Chucks gives Codex reliable 5e capabilities for preparing and running a game. It can search the current SRD, look up monsters and stat blocks, build and validate balanced encounters, or roll a random encounter when the party goes off the beaten path.
 
 ## Install
 
@@ -17,30 +17,31 @@ codex plugin add chucks@chucks
 
 For step-by-step setup instructions, visit [chucks.ai/docs](https://www.chucks.ai/docs).
 
-## How to use
+## What you can do with Chucks
 
-Just ask, in plain English:
+Just ask Codex in plain English:
 
-> *Build me a moderate encounter for four level 5 characters. They're sneaking through a haunted lighthouse at night.*
+- **Check a rule.** Ask *“What are the current rules for hiding?”* Chucks searches the current SRD instead of relying on Codex's memory of older editions.
+- **Look up a monster.** Ask *“Show me the fire elemental stat block.”* Chucks returns the verified current name, description, and SRD stat block.
+- **Build a balanced encounter.** Ask *“Build a moderate encounter for four level 5 characters. They're sneaking through a haunted lighthouse at night.”* Chucks uses real monsters, calculates the XP budget with the 2024 rules, and checks the completed roster.
+- **Roll a random encounter.** Tell Codex where the party is and how difficult the fight should be. Chucks chooses the opponents, and Codex sets the scene and gives them a reason to be there.
 
-You'll get back:
+You can follow up naturally: ask for a harder version, replace a monster, request the broader chapter behind a rule, or adjust the encounter for your table.
 
-- **An Encounter Hook** - a couple of sentences describing who the creatures are, why they're there, and why they're hostile. Read it to your players.
-- **A Roster** - the monsters involved, their counts, and the XP each. Total XP lands inside the budget for the difficulty you asked for.
+## What the plugin includes
 
-You can then say things like *"swap the wraith for something less deadly"* or *"give me a tougher version"* and it'll iterate.
+Chucks combines two pieces:
 
-## What you get
+- A connector to Chucks' hosted rules and monster data, encounter calculations, validation, and random encounter generator.
+- An encounter-building skill that teaches Codex how to combine those capabilities into a useful result.
 
-The **Encounter Builder** skill. It knows how to:
+The individual capabilities can also be combined in your own skills. Chucks supplies reliable building blocks without deciding how you have to play.
 
-- Match monsters to your party's level and chosen difficulty
-- Respect the setting
-- Generate random wilderness, travel, and dungeon encounters at the roll of a die
-- Pick thematically coherent groups of enemies
-- Keep encounters playable
+## What's covered
 
-It **won't** give you stat blocks, read-aloud text, or tactical advice. Those belong in your books and your head, not in an LLM.
+Rules, character options, spells, items, and monsters are limited to material published in the current SRD. Material from other sourcebooks is not available through Chucks. Codex may still answer from memory, but that answer did not come from Chucks and may be incomplete or blend different editions.
+
+The bundled encounter builder keeps its default output focused on a short encounter hook and a checked roster. It leaves out read-aloud text and tactical advice unless you ask for them because those details are easier for an AI to get wrong.
 
 ## Coming soon
 
@@ -48,8 +49,6 @@ More skills are in the works:
 
 - **Monster builder** - design and balance your own stat blocks
 - **NPC generator** - flesh out NPCs with personality, motivation, and mechanics
-- **Rules lookup** - search SRD 5.2.1 for specific rules and spells
-- **Monster converter** - bring old-edition monsters up to the current ruleset
 
 ## Questions or feedback
 
