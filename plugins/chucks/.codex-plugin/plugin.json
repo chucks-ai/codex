@@ -1,7 +1,7 @@
 {
   "name": "chucks",
   "version": "1.2.1",
-  "description": "Generate 5E-compatible balanced, themed combat encounters for your party in seconds.",
+  "description": "Search current 5e SRD rules, look up monsters, and build balanced or random encounters.",
   "author": {
     "name": "Chucks",
     "url": "https://chucks.ai"
@@ -15,15 +15,18 @@
     "5e",
     "fifth-edition",
     "srd",
+    "rules-reference",
+    "monster-lookup",
     "encounter-builder",
+    "random-encounters",
     "game-master"
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Chucks",
-    "shortDescription": "Build balanced fifth-edition encounters",
-    "longDescription": "Generate 5E-compatible balanced, themed combat encounters for tabletop RPG parties. Chucks connects Codex to the hosted monster database and guides encounter planning, search, validation, and roster output.",
+    "shortDescription": "Search 5e rules and build balanced encounters",
+    "longDescription": "Give Codex reliable D&D 5e capabilities: search the current SRD, read complete rules chapters, look up verified monsters and stat blocks, build and validate balanced encounters using the 2024 rules, and roll random encounters.",
     "developerName": "Chucks",
     "category": "Productivity",
     "capabilities": [
@@ -32,9 +35,10 @@
     ],
     "websiteURL": "https://chucks.ai",
     "defaultPrompt": [
+      "Check the current rule for hiding",
+      "Look up the fire elemental stat block",
       "Build a moderate encounter for four level 5 characters",
-      "Create a river ambush for my party",
-      "Make this encounter harder"
+      "Roll a random encounter for a forest journey"
     ],
     "brandColor": "#7C3AED",
     "screenshots": []
