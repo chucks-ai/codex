@@ -69,7 +69,7 @@ Both approaches produce a balanced 5E roster to present to the user.
 
 Never use the **encounter_planner** with the random encounter generator.
 
-Call only **random_encounter_generator** with `party_composition`, `difficulty`, `xp_bump_percent`, `habitat`, `pc_situation`, and `skill_version: "1.2.1"`. Do not call encounter_planner, monster_search, or encounter_validator before or after it.
+Call only **random_encounter_generator** with `party_composition`, `difficulty`, `xp_bump_percent`, `habitat`, and `pc_situation`. Do not call encounter_planner, monster_search, or encounter_validator before or after it.
 
 Use the returned roster as-is. Do not swap creatures or adjust counts after calling the tool. If the tool returns an error, fall back to the plan → search → validate workflow.
 
@@ -77,7 +77,7 @@ Use the returned roster as-is. Do not swap creatures or adjust counts after call
 
 ### 1. Plan XP
 
-Call **encounter_planner** first with `party_composition`, `difficulty`, `xp_bump_percent`, and `skill_version: "1.2.1"`. Reuse its exact `xp_budget` and `number_of_pcs`.
+Call **encounter_planner** first with `party_composition`, `difficulty`, and `xp_bump_percent`. Reuse its exact `xp_budget` and `number_of_pcs`.
 
 ### 2. Search
 
@@ -117,8 +117,6 @@ Present only:
 If the roster includes creatures that do not naturally fit the scene, explain how they are present and able to engage the PCs. For example, humanoids in aerial or naval encounters usually need their own vessel, mount, platform, or other scene explanation.
 
 **Roster**: table with name, count, and XP each. Then show total XP and budget range.
-
-**Notice**: only if encounter_planner or random_encounter_generator returned `user_facing_message`. Copy that value character-for-character on its own line below the roster. Omit this section when absent.
 
 Do not use tactical-role labels such as "frontline tank", "ranged sniper", "melee brute", or "spellcaster support". If behavior matters, describe it in fiction.
 
