@@ -9,15 +9,19 @@ Build valid 5E-compatible combat encounters (SRD 5.2.1) with random_encounter_ge
 
 Do not force an encounter when the user's constraints cannot produce a valid roster. If required monsters do not exist, cannot fit the XP budget, or cannot satisfy explicit scene constraints, explain what blocks the encounter and ask which constraint to relax.
 
-## Party Composition
+## Read the request
+
+Before calling any tool, read the party, the scene, and the encounter constraints.
+
+### Party Composition
 
 `party_composition` is required: the number of characters and their levels. Ask for it if missing.
 
-`difficulty` is optional. If the user does not specify it, use `"unknown"`.
+`difficulty` is optional. If the user does not specify it, use `"unknown"`. Map the user's wording to `low`, `moderate`, or `high`: easy is `low`, medium is `moderate`, and hard or deadly is `high`.
 
 Only include `xp_bump_percent` if the user explicitly asks for an encounter that diverges from the baseline XP budget for the party's levels.
 
-## Scene
+### Scene
 
 Map scene fields once and pass the same values to any tool that accepts them.
 
@@ -40,11 +44,26 @@ Map scene words to habitat values:
 
 `pc_situation`: what the PCs are doing. Use `on_waterborne_vessel`, `flying`, `surface_swimming`, or `underwater_swimming`. Omit it for an ordinary land scene.
 
+### Encounter constraints
+
+Encounter constraints are what the user says about the opponents or about what they must overcome. Look for them in:
+- **Creatures.** Monsters or groups the user includes or excludes, including unnamed groups such as "companions". A single creature ("a troll") means one. A plural or group ("kobolds", "companions", "a pack of wolves") means two or more. "A pair" means two. Companions are in addition to the creatures they accompany.
+- **Theme or faction.** For example, a horror encounter or a thieves' guild.
+- **Monster descriptions.** What the user says the monsters look like, carry, or do.
+- **Scene obstacles.** Terrain that keeps the creatures from reaching the PCs, such as a wide river between them or PCs on top of a tower. Infer the capability the creatures need to reach the PCs.
+- **Hazards.** A hazard the fight happens inside. Infer what the creatures need to survive it or attack from outside it. Inside a freezing blizzard: cold resistance or immunity.
+
+A description is mechanical only if most creatures could not do it, such as casting fire spells, carrying crossbows, or burrowing up from underground. Capabilities inferred from scene obstacles and hazards are mechanical too. Check mechanical constraints with the tools.
+
+Everything else is flavor, such as charging, surrounding the PCs, taunting them, or sizes: "a huge beast" is any very big beast, not the Huge size. Do not verify flavor with tools. When in doubt, treat a description as flavor.
+
+`pc_situation` is never an encounter constraint. The tools already restrict creatures to what the PCs' situation requires, so do not add constraints for it: PCs riding griffons do not need a flying constraint.
+
 ## Choose your approach
 
-First decide whether the request has any explicit custom encounter constraints.
+First decide whether the request has any encounter constraints.
 
-The following fields do not count as custom encounter constraints:
+The following fields do not count as encounter constraints:
 - `party_composition`
 - `difficulty`
 - `xp_bump_percent`
@@ -53,15 +72,11 @@ The following fields do not count as custom encounter constraints:
 
 Scene context such as forest, ocean, countryside, dungeon, city street, sailing on a ship, swimming, or flying is only `habitat` and/or `pc_situation`. It does not require plan → search → validate.
 
-Do not infer custom constraints from scene context. Do not invent themes such as pirates, sea creatures, naval threats, ambushers, or factions before choosing the workflow.
+Do not invent themes such as pirates, sea creatures, naval threats, ambushers, or factions before choosing the workflow.
 
-Use **plan → search → validate** only when the user explicitly provides at least one custom encounter constraint:
-- monsters to include or exclude
-- an encounter theme or faction
-- obstacles or hazards
-- actions performed by opponents
+A hazard is a constraint even when it names a habitat: "fighting in a mountain blizzard" is a `Mountain` habitat plus a cold hazard.
 
-In all other cases, use **random_encounter_generator**.
+Use **plan → search → validate** only when the request has at least one encounter constraint, even a flavor-only one: the random generator cannot match any description. In all other cases, use **random_encounter_generator**.
 
 Both approaches produce a balanced 5E roster to present to the user.
 
@@ -79,13 +94,17 @@ Use the returned roster as-is. Do not swap creatures or adjust counts after call
 
 Call **encounter_planner** first with `party_composition`, `difficulty`, and `xp_bump_percent`. Reuse its exact `xp_budget` and `number_of_pcs`.
 
-### 2. Search
+### 2. Find candidates
 
-Call **monster_search** once with `party_composition`, `difficulty`, `xp_bump_percent`, `habitat`, `pc_situation`, and `queries`.
+Call **monster_search** once with `party_composition`, `difficulty`, `xp_bump_percent`, `habitat`, `pc_situation`, and `queries` for every creature group and constraint.
 
-Use `power_tier` and `capabilities` for selection, not final wording.
+Search returns a summary of each candidate. When a mechanical constraint needs details the summary does not show, such as gear or damage defenses, call **monster_lookup** (when available) with the shortlist in one call, and look up more candidates if none qualify. Keep only creatures whose stat block confirms the detail; creatures of the same species often carry different gear. If **monster_lookup** is unavailable, tell the user which details are unverified.
+
+The tools know what creatures can do, not what fits a theme. Use your own knowledge to pick creatures that fit the theme, faction, and flavor, such as undead and cultists for a horror encounter.
 
 ### 3. Assemble
+
+Include exactly the creatures and counts from the encounter constraints.
 
 Default to single-species encounters. Go multi-species only when the theme calls for it.
 
@@ -98,13 +117,7 @@ Hard rules, unless the user asks otherwise:
 
 The Hook may add factions, motives, settings, and props, but do not invent gear, abilities, damage types, or mechanical effects. If a detail is mechanically important, verify it with **monster_lookup** or keep it vague.
 
-### 4. Lookup when needed
-
-Call **monster_lookup** only when you need the verified stat block (gear, defenses, senses, abilities) or template-variant species to narrow the roster. For a basic Hook + Roster, search results are enough.
-
-If lookup data does not contain a detail, do not guess.
-
-### 5. Validate
+### 4. Validate
 
 Call **encounter_validator** with the finalized roster and planner budget. If invalid, adjust counts or swaps and validate again before presenting.
 
@@ -112,7 +125,7 @@ Call **encounter_validator** with the finalized roster and planner budget. If in
 
 Present only:
 
-**Encounter Hook**: 2-3 sentences explaining who the creatures are, why they are here, and why they are hostile.
+**Encounter Hook**: 2-3 sentences explaining who the creatures are, why they are here, and why they are hostile. Use the roster's exact creature names and counts.
 
 If the roster includes creatures that do not naturally fit the scene, explain how they are present and able to engage the PCs. For example, humanoids in aerial or naval encounters usually need their own vessel, mount, platform, or other scene explanation.
 
