@@ -92,11 +92,11 @@ Use the returned roster as-is. Do not swap creatures or adjust counts after call
 
 ### 1. Plan XP
 
-Call **encounter_planner** first with `party_composition`, `difficulty`, and `xp_bump_percent`. Reuse its exact `xp_budget` and `number_of_pcs`.
+Call **encounter_planner** with `party_composition`, `difficulty`, and `xp_bump_percent`. Reuse its exact `xp_budget` and `number_of_pcs`.
 
 ### 2. Find candidates
 
-Call **monster_search** once with `party_composition`, `difficulty`, `xp_bump_percent`, `habitat`, `pc_situation`, and `queries` for every creature group and constraint.
+Call **monster_search** once, in the same response as encounter_planner: the search does not need the planner's results. Pass `party_composition`, `difficulty`, `xp_bump_percent`, `habitat`, `pc_situation`, and `queries` for every creature group and constraint.
 
 Search returns a summary of each candidate. When a mechanical constraint needs details the summary does not show, such as gear or damage defenses, call **monster_lookup** (when available) with the shortlist in one call, and look up more candidates if none qualify. Keep only creatures whose stat block confirms the detail; creatures of the same species often carry different gear. If **monster_lookup** is unavailable, tell the user which details are unverified.
 
