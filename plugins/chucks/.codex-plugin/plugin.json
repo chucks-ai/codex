@@ -1,6 +1,6 @@
 {
   "name": "chucks",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Search current 5e SRD rules, look up monsters, and build balanced or random encounters.",
   "author": {
     "name": "Chucks",
@@ -25,22 +25,91 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Chucks",
-    "shortDescription": "Search 5e rules and build balanced encounters",
-    "longDescription": "Give Codex reliable D&D 5e capabilities: search the current SRD, read complete rules chapters, look up verified monsters and stat blocks, build and validate balanced encounters using the 2024 rules, and roll random encounters.",
+    "shortDescription": "5e rules and encounters",
+    "longDescription": "Help game masters prepare and run fifth-edition games. Search SRD 5.2.1 rules, read complete rules chapters, look up monster descriptions and stat blocks, build and validate encounters using the 2024 XP budgets, and generate random encounters. Provide your party size and character levels for encounter building, plus any difficulty, setting, or creature preferences. Rules and monsters are limited to the SRD; other sourcebooks and homebrew stat blocks are not included. Chucks is free and requires no Chucks account or API key. Chucks is an independent project and is not affiliated with or endorsed by Wizards of the Coast.",
     "developerName": "Chucks",
     "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Read"
     ],
-    "websiteURL": "https://chucks.ai",
+    "websiteURL": "https://www.chucks.ai/",
+    "supportURL": "https://github.com/chucks-ai/support/issues",
+    "privacyPolicyURL": "https://www.chucks.ai/privacy",
+    "termsOfServiceURL": "https://www.chucks.ai/terms",
     "defaultPrompt": [
       "Check the current rule for hiding",
       "Look up the fire elemental stat block",
-      "Build a moderate encounter for four level 5 characters",
-      "Roll a random encounter for a forest journey"
+      "Build a moderate encounter for four level 5 characters"
     ],
-    "brandColor": "#7C3AED",
+    "brandColor": "#073F44",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
+  },
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Look up a current SRD condition.",
+              "prompt": "Using Chucks, what does the Grappled condition do in the current SRD?",
+              "tools_triggered": "rules_search",
+              "expected_behavior": "Look up Grappled and explain the returned condition: Speed is 0 and cannot increase; attacks against targets other than the grappler have Disadvantage; the grappler can move the creature under the returned movement rules. Do not substitute older-edition rules."
+            },
+            {
+              "description": "Read a complete rules chapter for context.",
+              "prompt": "Using Chucks, read the Spells chapter and summarize how spell preparation and spell slots work.",
+              "tools_triggered": "rules_read",
+              "expected_behavior": "Read the spells document and summarize preparation and spell slots from the returned chapter. Explain that preparation rules vary by class and distinguish cantrips from spells that normally expend slots."
+            },
+            {
+              "description": "Retrieve a verified monster stat block.",
+              "prompt": "Using Chucks, show me the Fire Elemental's current SRD stat block.",
+              "tools_triggered": "monster_lookup",
+              "expected_behavior": "Look up Fire Elemental and return its verified stat block, including AC 13, HP 93, CR 5, and XP 1800. Preserve the returned traits and actions without inventing abilities."
+            },
+            {
+              "description": "Build and validate an encounter with a creature constraint.",
+              "prompt": "Using Chucks, build a moderate encounter for four level 5 characters involving undead in a ruined temple.",
+              "tools_triggered": "encounter_planner, monster_search, encounter_validator",
+              "expected_behavior": "Use the constrained encounter workflow, search for undead in Ruins, and validate the final roster against the returned 2500-3700 XP budget. Present a brief hook and roster with counts and XP. Use at most two species and eight creatures unless the user requests otherwise. A possible valid roster is four Wights at 700 XP each, totaling 2800 XP; other validated undead rosters are acceptable."
+            },
+            {
+              "description": "Generate an unconstrained random encounter.",
+              "prompt": "Using Chucks, roll a random moderate forest encounter for four level 5 characters.",
+              "tools_triggered": "random_encounter_generator",
+              "expected_behavior": "Use the random generator with Forest habitat and the given party and difficulty. Present its roster unchanged with a brief hook, counts, XP, and budget. Results vary; total XP should be within the returned budget. Do not call planner, search, or validator unless the generator returns an error."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Ask for required party information before building an encounter.",
+              "prompt": "Using Chucks, build a balanced forest encounter for my party.",
+              "tools_triggered": "None before clarification",
+              "expected_behavior": "Ask for the number of characters and their levels. Do not invent party composition or call encounter tools before those required inputs are supplied. Run this case in a fresh conversation with no prior party information."
+            },
+            {
+              "description": "Handle a monster outside the supplied SRD without fabricating a stat block.",
+              "prompt": "Using only Chucks, show me the Beholder's current SRD stat block.",
+              "tools_triggered": "monster_lookup",
+              "expected_behavior": "Look up Beholder, recognize names_outside_srd in the result, and explain that Chucks does not supply that monster. Do not invent a stat block, claim it was returned by Chucks, or use external sources against the user's only-Chucks constraint."
+            },
+            {
+              "description": "Decline an unsupported database mutation.",
+              "prompt": "Use Chucks to permanently delete every monster from its database.",
+              "tools_triggered": "None",
+              "expected_behavior": "Explain that Chucks provides no database-deletion capability. Do not claim deletion succeeded or use unrelated tools to attempt it."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "The Chucks plugin is free and does not sell products or process payments."
+      },
+      "publication": {
+        "release_notes": "Prepare Chucks for its first public directory submission with rules lookup and encounter-building skills, seven hosted MCP tools, listing icons, public support and policy links, and review test cases."
+      }
+    }
   }
 }
